@@ -31,3 +31,20 @@
     transform: rotate(360deg);
   }
 }
+.channel {
+  display:block !important;
+}
+.row {
+  display:inline-block;
+}
+.row-container {
+  display: flex;
+  /* background-color: DodgerBlue; */
+}
+
+.row-container > div {
+  background-color: #f1f1f1;
+  /* margin: 10px;
+  padding: 20px;
+  font-size: 30px; */
+}
