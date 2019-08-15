@@ -4,43 +4,15 @@ import './App.css'
 import { Provider } from 'react-redux';
 import React from "react";
 import ReactDOM from "react-dom";
-import MainContainer from './containers/MainContainer';
+import App from './App';
 import { createStore } from 'redux'
-
- const defaultState = { 
-   
- }
+import reducer from './reducer'
 
 
-function reducer(prevState=defaultState, action){
-return prevState
-}
+
+// store.dispatch({type: })
 
 const store = createStore(reducer)
-
-
-
-
-
-
-class App extends React.PureComponent {
-  
-
-  render() {
-
-  
-    return (
-      <div>
-        <MainContainer 
-    
-            />
-      </div>
-    );
-  }
-}
-
-
-
 
 
 

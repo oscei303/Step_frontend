@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const Button = styled.button `
   padding: 0.75em 1em;
   outline: none;
-  background-color: #C7ED0B;
+  background-color: #2D3047;
   border: none;
   border-radius: 5px;
   color: white;
@@ -15,7 +15,7 @@ const Button = styled.button `
   margin: 0.5em
 
   &:hover {
-    background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
     cursor: pointer;
   }
   
@@ -32,14 +32,14 @@ font-size: 1em;
 margin: 0.5em
 
     &:hover {
-        background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
         cursor: pointer;
     }
 `;
 const TrigButton = styled.button `
 padding: 0.75em 1em;
 outline: none;
-background-color: #048A81;
+background-color: #ECA72C;
 border: none;
 border-radius: 5px;
 color: white;
@@ -47,14 +47,14 @@ font-size: 1em;
 margin: 0.5em
 
     &:hover {
-        background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
         cursor: pointer;
     }
 `;
 const ComboButton = styled.button `
 padding: 0.40em 1em;
 outline: none;
-background-color: #27ae60;
+background-color: #ECA72C;
 border: none;
 border-radius: 5px;
 color: black;
@@ -62,7 +62,7 @@ font-size: 1em;
 margin: 0.5em
 
     &:hover {
-        background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
         cursor: pointer;
     }
 `;
@@ -75,6 +75,7 @@ class Step extends React.Component{
 
 
     triggerStep = (rowIndex, colIndex) => {
+        // console.log(rowIndex)
         // this.setState({
         //     stepON: !this.state.stepON
         // }, () => console.log(this.state.stepON))

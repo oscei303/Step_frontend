@@ -1,24 +1,10 @@
 import React, { Fragment } from 'react'
 import Channel from './Channel'
-import Tone from 'tone'
+import MyDrums from './MyDrums'
+
+import { connect } from 'react-redux'
 
 
-
-const synth = new Tone.Synth({
-            "oscillator": {
-                "type": "square",
-                "modulationFrequency": 5
-            },
-            "envelope": {
-                "attack": 0.6,
-                "decay": 0.1,
-                "sustain": 0.2,
-                "release": 0.9,
-            },
-            "detune": {
-
-            }
-        }).toMaster()
 
 
  let intervalID 
@@ -29,22 +15,32 @@ class MySequencer extends React.Component {
 
         state = {
             matrix: [
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0]
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ],
+            drumMatrix: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ],
             activateStart: false,
             activeColumn: 0,
-            playing: true
+            playing: true,
+            interval: 400,
+            loggedIn: false,
+            user: ''
         }
 
-
-    toneStart = (note) => {
-        Tone.start()
-        synth.triggerAttackRelease(note, "16n");
-
-    }
 
       handleStart = () => {
           console.log('start')
@@ -58,7 +54,7 @@ class MySequencer extends React.Component {
 
       startInterval = () => {
           if(this.state.playing){
-              intervalID = setInterval(() => this.nextColumn(), 400)
+              intervalID = setInterval(() => this.nextColumn(), this.state.interval)
 
           }
       }
@@ -102,21 +98,40 @@ class MySequencer extends React.Component {
         this.setState({
             matrix: newMatrix
         })
+    }
 
+    toggleDrumStep = (rowIndex, colIndex) => {
+        let newMatrix = this.state.drumMatrix.map(row => {
+            return [...row]
+        })
+        
+        newMatrix[rowIndex][colIndex] = 1 - this.state.drumMatrix[rowIndex][colIndex]
+
+        this.setState({
+            drumMatrix: newMatrix
+        })
     }
 
 
 
 
     render(){
-        // console.log(this.state.matrix)
+        // console.log(this.state)
         return (
             <div>
                 <Fragment>
                    <Channel
                      activeColumn={this.state.activeColumn}
                      toggleStep={this.toggleStep}
-                     matrix={this.state.matrix} />
+                     matrix={this.state.matrix}
+                      />
+                <MyDrums
+
+                    activeColumn={this.state.activeColumn}
+                    matrix={this.state.drumMatrix}
+                    toggleStep={this.toggleDrumStep}
+                    
+                />
                 </Fragment>
                   <div>
                     <button
@@ -129,5 +144,15 @@ class MySequencer extends React.Component {
     }  
 }
 
-export default MySequencer 
+function msp(state){
+    // console.log(state)
+    return {...state}
+}
+
+function mdp(dispatch){
+    return {
+
+    }
+}
+export default connect(msp,mdp)(MySequencer) 
 

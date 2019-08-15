@@ -1,5 +1,5 @@
 import React from 'react'
-import Step from './Step'
+import DrumStep from './DrumStep'
 import Tone from 'tone'
 
 
@@ -22,25 +22,35 @@ class Row extends React.Component{
 
 
 
-        playTone = (osc, note) => {
-            const synth = new Tone.Synth({
-                "oscillator": {
-                    "type": osc,
-                    "modulationFrequency": 5
-                },
-                "envelope": {
-                    "attack": 0.6,
-                    "decay": 0.1,
-                    "sustain": 0.2,
-                    "release": 0.9,
-                },
-                "detune": {
-
-                }
-            }).toMaster()
-            Tone.start()
-            synth.triggerAttackRelease(note, "16n");
-            console.log('waddup')
+        playTone = (row) => {
+            console.log(row)
+            if(row === 0){
+                  const player = new Tone.Player("/hh02.wav").toMaster()
+                  player.autostart = true
+            }   
+            if(row === 1){
+                  const player = new Tone.Player("/oh02.wav").toMaster()
+                  player.autostart = true
+            }   
+            if(row === 2){
+                  const player = new Tone.Player("/sd11.wav").toMaster()
+                  player.autostart = true
+            }   
+            if(row === 3){
+                  const player = new Tone.Player("/bd05.wav").toMaster()
+                  player.autostart = true
+            }   
+        
+            // const player = new Tone.Players({
+            //         BD: "/bd05.wav"
+            //         // CP: "/clap.wav",
+            //         // OH: "/hh_open.wav",
+            //         // CH: "/hh_closed.wav"
+            //     })
+            //  const lineMap = ["BD"]
+            // //  debugger
+            //  player.get(lineMap[0]).start()
+          
         }
 
 
@@ -54,8 +64,8 @@ class Row extends React.Component{
             return (
                 <div className='row'>
              
-                    <Step
-                    playTone={() => this.playTone(this.state.osc, this.state.note)}
+                    <DrumStep
+                    playTone={() =>this.playTone(this.props.rowIndex)}
                     stepON={step}
                     toggleStep={this.props.toggleStep} 
                     activeStep={this.props.activeColumn === colIndex}
@@ -86,13 +96,13 @@ class Row extends React.Component{
                   <div className='row'>
                             <select onChange={this.handleChange} name='osc'>
 
-                                <option>sine</option>
-                                <option>pwm</option>
-                                <option>square</option>
-                                <option>triangle</option>
+                                <option>..... ...</option>
+                                <option></option>
+                                <option></option>
+                                <option></option>
                             </select>    
                             <select onChange={this.handleChange} name='note'>
-                                <option>C2</option>
+                                <option>.... ...  </option>
                                 <option>D2</option>
                                 <option>E2</option>
                                 <option>F2</option>
@@ -115,6 +125,7 @@ class Row extends React.Component{
                                 <option>B4</option>
                             </select>    
                         </div>  
+            
                 {this.renderStep()}
 
             </div>
