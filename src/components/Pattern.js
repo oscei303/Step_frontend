@@ -5,7 +5,7 @@ import { darken } from 'polished'
 
 
 const Button = styled.button `
-padding: 0.40em 1em;
+padding: 0.35em 1em;
 outline: none;
 background-color: #B6DB00;
 border: 1px solid #2D3047;
@@ -25,7 +25,7 @@ class Pattern extends React.Component {
     render(){
         return (
             <div>
-                <Button>Pattern {this.props.patternNum}</Button>
+                <Button>Pattern {this.props.i + 1}</Button>
             </div>
         )
     }

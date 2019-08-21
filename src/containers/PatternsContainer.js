@@ -6,14 +6,19 @@ import PatternD from '../components/PatternD'
 class PatternsContainer extends React.Component {
 
     renderPattern = () => {
-        return this.props.patterns.map(pattern => {
-            return <Pattern key={pattern.id} patternNum={pattern.id} pattern={pattern} />
+        return this.props.patterns.map((pattern, i) => {
+            return <Pattern key={pattern.id} patternNum={pattern.id} pattern={pattern} i={i} />
   
         })
     }
     renderDrums = () => {
-        return this.props.drums.map(pattern => {
-            return <PatternD key={pattern.id} patternNum={pattern.id} pattern={pattern} />
+        return this.props.drums.map((pattern, i) => {
+            return <PatternD
+                        loadDrums={this.props.loadDrums} 
+                        key={pattern.id} 
+                        patternNum={pattern.id} 
+                        pattern={pattern} i={i} 
+                        />
   
         })
     }
@@ -23,8 +28,8 @@ class PatternsContainer extends React.Component {
         return(
             <div>
                 <span>
-                    <h3>Patterns:</h3>
-                    <div>
+                    <h3 id="sub">Patterns:</h3>
+                    <div id="box">
                     {   this.props.patterns ?
                         this.renderPattern()
                         :
@@ -33,8 +38,8 @@ class PatternsContainer extends React.Component {
                     </div> 
                 </span>
                 <span>
-                    <h3>Drum Patterns:</h3>
-                <div>
+                    <h3 id='sub'>Drum Patterns:</h3>
+                <div id='box'>
                 {   this.props.patterns ?
                     this.renderDrums()
                     :

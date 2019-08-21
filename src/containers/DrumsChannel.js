@@ -16,6 +16,7 @@ class DrumsChannel extends React.Component {
                         
                         <div className='row'>
                          <DrumRow
+                            
                             player={this.props.player}
                             key={rowIndex} 
                             row={row} 
@@ -37,7 +38,7 @@ render(){
 
     return (
         <div>
-            <h4>Bootleg 909 </h4>
+            <h4 id='title2'>Bootleg 909 </h4>
             {this.renderSteps()}
         </div>
     )

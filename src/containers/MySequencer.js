@@ -2,6 +2,9 @@ import React, { Fragment } from 'react'
 import Channel from './Channel'
 import MyDrums from './MyDrums'
 import PatternsContainer from './PatternsContainer';
+import { darken } from 'polished'
+import styled from 'styled-components'
+
 
 import { Dial, TextButton } from 'react-nexusui'
 
@@ -16,7 +19,52 @@ var context = new AudioContext();
 
  let intervalID 
 
+ const Buttn = styled.button `
+  padding: .75em 1em;
+  outline: none;
+  background-color: #EB4048;
+  border: 3px solid black;
+  border-radius: 2px;
+  color: white;
+  font-size: .75em;
+  margin: 0.5em
+
+  &:hover {
+    background: ${darken(0.2, "#BE1E25")};
+    cursor: pointer;
+  }
+  `
+ const Btn = styled.button `
+  padding: .15em .15em;
+  outline: none;
+  background-color: #EB4048;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: white;
+  font-size: 1em;
+  margin: 0.15em
+
+  &:hover {
+    background: ${darken(0.2, "#BE1E25")};
+    cursor: pointer;
+  }
+  `
  
+ const Bttn = styled.button `
+  padding: .75em 1em;
+  outline: none;
+  background-color: #fffff;
+  border: 3px solid #ECA72C;
+  border-radius: 2px;
+  color: black;
+  font-size: 5.em;
+  margin: 0.5em
+
+  &:hover {
+    background: ${darken(0.2, "#CAC0BF")};
+    cursor: pointer;
+  }
+  `
  
 //  const DialProps = {
 //      size : [0.3, 0.3],
@@ -56,7 +104,7 @@ class MySequencer extends React.Component {
             activateStart: false,
             activeColumn: 0,
             playing: true,
-            interval: 150,
+            interval: 113,
             loggedIn: false,
             userPatterns: [],
             userDrums: []
@@ -185,7 +233,8 @@ class MySequencer extends React.Component {
         .then(r=>r.json())
         .then(patterns => {
             this.setState({
-                userPatterns: patterns.patterns
+                userPatterns: patterns.patterns,
+                userDrums: patterns.patterns
             }, () => console.log('patterns', this.state.userPatterns))
 
         })
@@ -193,7 +242,7 @@ class MySequencer extends React.Component {
 
 
     displayBPM = (state) => {
-        return state + 15
+        return state + 18
     }
 
 
@@ -221,6 +270,28 @@ class MySequencer extends React.Component {
         })
     }
 
+    increaseBPM = () => {
+        this.setState({
+            interval: this.state.interval + 1
+        })
+    }
+    decreaseBPM = () => {
+        this.setState({
+            interval: this.state.interval - 1
+        })
+    }
+
+    loadDrums = (clickedId) => {
+        debugger
+       const loadedPattern = this.state.userPatterns.find(pattern => {
+            return pattern.id === clickedId
+        })
+        this.setState({
+            drumMatrix: loadedPattern.pattern
+        })
+            
+    }
+
 
 
 
@@ -229,8 +300,12 @@ class MySequencer extends React.Component {
         //    console.log('seq', this.props.user)
         return (       <div>
                 <Fragment>
-                    <div id='dial'>
-                        <h4>BPM: {this.displayBPM(this.state.interval) === 136 ? 'YAS TECHNO' : this.displayBPM(this.state.interval)  }</h4>
+                    <div id="dial" >
+                        <h4 id='title'>BPM: {this.displayBPM(this.state.interval) === 136 ? 'YAS! TECHNO' : this.displayBPM(this.state.interval)  }</h4>
+                    <br></br>
+                    <h1 id="title3" onClick={this.increaseBPM}>+</h1>
+                    <br></br>
+                    <h1 id="title3" onClick={this.decreaseBPM}>-</h1>
                     </div>
                    <Channel
                      activeColumn={this.state.activeColumn}
@@ -238,6 +313,7 @@ class MySequencer extends React.Component {
                      matrix={this.state.matrix}
                       />
                 <MyDrums
+                   
                     player={this.props.player}
                     activeColumn={this.state.activeColumn}
                     matrix={this.state.drumMatrix}
@@ -248,25 +324,14 @@ class MySequencer extends React.Component {
                   
                 </Fragment>
                   <div>
-                    <button
-                        onClick={this.toggleStart}>
-                            {this.state.activateStart ? 'PAUSE' : 'START'}
-                    </button>
-                    <button
-                        onClick={this.savePattern}>
-                            SAVE PATTERN
-                    </button>
-                     <button
-                        onClick={this.saveDrums}>
-                            SAVE DRUMS
-                    </button>
-                    <button
-                        onClick={this.clearPattern}>
-                            CLEAR PATTERN
-                    </button>
+                    <Buttn onClick={this.toggleStart}>                            {this.state.activateStart ? 'PAUSE' : 'START'}</Buttn>
+                    <Bttn onClick={this.savePattern}>SAVE PATTERN</Bttn>
+                    <Bttn onClick={this.saveDrums}>SAVE DRUMS</Bttn>
+                    <Bttn onClick={this.clearPattern}>CLEAR</Bttn>
                 </div>
                 <div>
                     <PatternsContainer
+                        loadDrums={this.loadDrums}
                         patterns={this.state.userPatterns}
                         drums={this.state.userDrums}
                     />

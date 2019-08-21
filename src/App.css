@@ -1,8 +1,9 @@
 body {
   background: #F5FFD1;
   background-image: url('/1.jpg');
-  /* -webkit-background-size: cover;
-  background-size: cover; */
+  -webkit-background-size: cover;
+  background-size: cover;
+  align-content: center
 }
 
 @keyframes moveRight {
@@ -56,6 +57,9 @@ body {
   to {
     transform: rotate(360deg);
   }
+
+
+
 }
 .channel {
   display:block !important;
@@ -63,8 +67,15 @@ body {
 .row {
   display:inline-block;
 }
+#box {
+  display:flex;
+}
+#dial {
+  display:inline-flex;
+}
 .row-container {
   display: flex;
+  display:block !important;
   /* background-color: DodgerBlue; */
 }
 
@@ -119,6 +130,43 @@ body {
   align-items: center;
   color: #C7ED0B;
   font-size: 10pt;
+}
+#title {
+  color: white;
+  font-size: 2em;
+  text-shadow: -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  font-style: italic;
+}
+#title2 {
+  color: white;
+  font-size: 1.1em;
+  text-shadow: -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  font-style: italic;
+}
+#title3 {
+  padding: 0.35em .1em;
+  color: #ECA72C;
+  font-size: 2em;
+  text-shadow: -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  font-style: italic;
+}
+#sub {
+  color: white;
+  font-size: 1em;
+  text-shadow: -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  font-style: bold;
 }
 /* 
 .grid-item {

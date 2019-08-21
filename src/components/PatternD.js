@@ -25,7 +25,7 @@ class PatternD extends React.Component {
     render(){
         return (
             <div>
-                <Button>DRUMS {this.props.patternNum}</Button>
+                <Button onClick={()=>this.props.loadDrums(this.props.patternNum)}>DRUMS {this.props.i + 1}</Button>
             </div>
         )
     }

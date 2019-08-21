@@ -38,7 +38,6 @@ render(){
 
     return (
         <div>
-            <h4>current step: {this.props.activeColumn + 1} </h4>
             {this.renderSteps()}
         </div>
     )
