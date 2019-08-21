@@ -213,13 +213,13 @@ class MySequencer extends React.Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-               pattern: this.state.drumMatrix,
-               userID: this.props.user.id
+                pattern: this.state.drumMatrix,
+                userID: this.props.user.id
             })
         }).then(r => r.json()).then(r => {
             this.setState({
                 userDrums: [...this.state.userDrums, r]
-            })
+            },()=> console.log(this.state.userDrums))
         })
     }
 
@@ -283,11 +283,21 @@ class MySequencer extends React.Component {
 
     loadDrums = (clickedId) => {
         debugger
-       const loadedPattern = this.state.userPatterns.find(pattern => {
+       const loadedPattern = this.state.userDrums.find(pattern => {
             return pattern.id === clickedId
         })
         this.setState({
             drumMatrix: loadedPattern.pattern
+        })
+            
+    }
+    loadPattern = (clickedId) => {
+        debugger
+       const loadedPattern = this.state.userPatterns.find(pattern => {
+            return pattern.id === clickedId
+        })
+        this.setState({
+            matrix: loadedPattern.pattern
         })
             
     }
@@ -297,7 +307,7 @@ class MySequencer extends React.Component {
 
 
     render(){
-        //    console.log('seq', this.props.user)
+           console.log('seq', this.props.user)
         return (       <div>
                 <Fragment>
                     <div id="dial" >
@@ -331,6 +341,7 @@ class MySequencer extends React.Component {
                 </div>
                 <div>
                     <PatternsContainer
+                        loadPattern={this.loadPattern}
                         loadDrums={this.loadDrums}
                         patterns={this.state.userPatterns}
                         drums={this.state.userDrums}

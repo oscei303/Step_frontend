@@ -7,7 +7,12 @@ class PatternsContainer extends React.Component {
 
     renderPattern = () => {
         return this.props.patterns.map((pattern, i) => {
-            return <Pattern key={pattern.id} patternNum={pattern.id} pattern={pattern} i={i} />
+            return <Pattern 
+                        loadPattern={this.props.loadPattern}
+                        key={pattern.id} 
+                        patternNum={pattern.id} 
+                        pattern={pattern} 
+                        i={i} />
   
         })
     }
