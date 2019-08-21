@@ -1,17 +1,37 @@
 import React, { Fragment } from 'react'
 import Channel from './Channel'
 import MyDrums from './MyDrums'
+import PatternsContainer from './PatternsContainer';
 
-import { connect } from 'react-redux'
+import { Dial, TextButton } from 'react-nexusui'
+
+
+
+
+
+var context = new AudioContext();
 
 
 
 
  let intervalID 
- 
 
+ 
+ 
+//  const DialProps = {
+//      size : [0.3, 0.3],
+//      interaction: "horizontal",
+//      mode: "absolute",
+//      min : 0,
+//      max : 1,
+//      step  : 0,
+//      value  : 0,
+//      onChange  : () => console.log('hi'),
+//      onReady : (dial: Nexus.Dial) => console.log('getit'),
+//  }
 
 class MySequencer extends React.Component {
+    
 
         state = {
             matrix: [
@@ -36,20 +56,23 @@ class MySequencer extends React.Component {
             activateStart: false,
             activeColumn: 0,
             playing: true,
-            interval: 400,
+            interval: 117,
             loggedIn: false,
-            user: ''
+            userPatterns: [],
+            userDrums: []
         }
 
 
       handleStart = () => {
-          console.log('start')
-          if(this.state.activateStart){
-            this.startInterval()
-          } else {
-              this.handleStop()
-          }
-      
+          context.resume().then(() => {
+
+              if(this.state.activateStart){
+                this.startInterval()
+              } else {
+                  this.handleStop()
+              }
+          
+          })
       }
 
       startInterval = () => {
@@ -64,15 +87,19 @@ class MySequencer extends React.Component {
       }
 
       toggleStart = () => {
-          if(this.state.activateStart){
-              this.setState({
-                  activateStart: false
-              }, () => this.handleStart())
-            }else {
-                this.setState({
-                    activateStart: true
-                }, ()=> this.handleStart())
-              }
+          console.log(context)
+          context.resume().then(() => {
+                    if (this.state.activateStart) {
+                        this.setState({
+                            activateStart: false
+                        }, () => this.handleStart())
+                    } else {
+                        this.setState({
+                            activateStart: true
+                        }, () => this.handleStart())
+                    }
+          })
+
           }
       
        
@@ -112,47 +139,147 @@ class MySequencer extends React.Component {
         })
     }
 
+    savePattern = () => {
+        fetch(`http://localhost:3000/patterns`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+               pattern: this.state.matrix,
+               userID: this.props.user.id
+            })
+        }).then(r => r.json()).then(r => {
+            this.setState({
+                userPatterns: [...this.state.userPatterns, r]
+            })
+        })
+    }
+
+    saveDrums = () => {
+        fetch(`http://localhost:3000/patterns`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+               pattern: this.state.drumMatrix,
+               userID: this.props.user.id
+            })
+        }).then(r => r.json()).then(r => {
+            this.setState({
+                userDrums: [...this.state.userDrums, r]
+            })
+        })
+    }
+
+    componentDidMount(){
+        this.fetchPatterns()
+    }
+
+    fetchPatterns = () => {
+        fetch(`http://localhost:3000/users/40`)
+        .then(r=>r.json())
+        .then(patterns => {
+            this.setState({
+                userPatterns: patterns.patterns
+            }, () => console.log('patterns', this.state.userPatterns))
+
+        })
+    }
+
+    componentDidUpdate(){
+
+    }
+    
+    displayBPM = (state) => {
+        return state + 15
+    }
+
+
+    clearPattern = () => {
+        this.setState({
+            matrix: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ],
+                drumMatrix: [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]
+        })
+    }
+
+
 
 
 
     render(){
-        // console.log(this.state)
-        return (
-            <div>
+        // console.log('in seq', this.props)
+        return (       <div>
                 <Fragment>
+                    <div id='dial'>
+                        <h4>BPM: {this.displayBPM(this.state.interval) === 136 ? 'YAS TECHNO' : this.displayBPM(this.state.interval)  }</h4>
+                    </div>
                    <Channel
                      activeColumn={this.state.activeColumn}
                      toggleStep={this.toggleStep}
                      matrix={this.state.matrix}
                       />
                 <MyDrums
-
+                    player={this.props.player}
                     activeColumn={this.state.activeColumn}
                     matrix={this.state.drumMatrix}
                     toggleStep={this.toggleDrumStep}
                     
+                    
                 />
+                  
                 </Fragment>
                   <div>
                     <button
                         onClick={this.toggleStart}>
                             {this.state.activateStart ? 'PAUSE' : 'START'}
                     </button>
+                    <button
+                        onClick={this.savePattern}>
+                            SAVE PATTERN
+                    </button>
+                     <button
+                        onClick={this.saveDrums}>
+                            SAVE DRUMS
+                    </button>
+                    <button
+                        onClick={this.clearPattern}>
+                            CLEAR PATTERN
+                    </button>
+                </div>
+                <div>
+                    <PatternsContainer
+                        patterns={this.state.userPatterns}
+                        drums={this.state.userDrums}
+                    />
                 </div>
             </div>
         ) 
     }  
 }
 
-function msp(state){
-    // console.log(state)
-    return {...state}
-}
 
-function mdp(dispatch){
-    return {
+    
 
-    }
-}
-export default connect(msp,mdp)(MySequencer) 
+export default MySequencer
 

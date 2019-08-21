@@ -1,14 +1,15 @@
 import React,{ Fragment } from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components'
+import Tone from 'tone'
 
 
 
 const Button = styled.button `
   padding: 0.75em 1em;
   outline: none;
-  background-color: #C7ED0B;
-  border: none;
+  background-color: #B6DB00;
+  border: 3px solid #fffff;
   border-radius: 5px;
   color: white;
   font-size: 1em;
@@ -78,6 +79,9 @@ class Step extends React.Component{
         // this.setState({
         //     stepON: !this.state.stepON
         // }, () => console.log(this.state.stepON))
+           if (Tone.context.state !== 'running') {
+               Tone.context.resume();
+           }
         this.props.toggleStep(rowIndex, colIndex, this.props.activeStep)
 
 

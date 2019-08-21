@@ -10,14 +10,15 @@ class MyDrums extends React.Component {
 
 
     render(){
-        // console.log('insideDrums', this.props)
+        console.log('insideDrums', this.props)
         return (
             <div>
                 <Fragment>
                    <DrumsChannel
-                     activeColumn={this.props.activeColumn}
-                     toggleStep={this.props.toggleStep}
-                     matrix={this.props.matrix} />
+                    player={this.props.player}
+                    activeColumn={this.props.activeColumn}
+                    toggleStep={this.props.toggleStep}
+                    matrix={this.props.matrix} />
                 </Fragment>
                   <div>
                 </div>

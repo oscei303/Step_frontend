@@ -1,6 +1,7 @@
 import React,{ Fragment } from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components'
+import Tone from 'tone'
 
 
 
@@ -8,7 +9,7 @@ const Button = styled.button `
   padding: 0.75em 1em;
   outline: none;
   background-color: #2D3047;
-  border: none;
+  border: 3px solid #fffff;
   border-radius: 5px;
   color: white;
   font-size: 1em;
@@ -75,6 +76,9 @@ class Step extends React.Component{
 
 
     triggerStep = (rowIndex, colIndex) => {
+           if (Tone.context.state !== 'running') {
+               Tone.context.resume();
+           }
         // console.log(rowIndex)
         // this.setState({
         //     stepON: !this.state.stepON

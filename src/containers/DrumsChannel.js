@@ -16,6 +16,7 @@ class DrumsChannel extends React.Component {
                         
                         <div className='row'>
                          <DrumRow
+                            player={this.props.player}
                             key={rowIndex} 
                             row={row} 
                             rowIndex={rowIndex}

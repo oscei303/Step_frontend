@@ -3,6 +3,8 @@ import DrumStep from './DrumStep'
 import Tone from 'tone'
 
 
+const context = new AudioContext(); 
+ 
 
 class Row extends React.Component{
 
@@ -19,46 +21,80 @@ class Row extends React.Component{
 
     }
 
+    // componentDidUpdate(){
+    //     co
+    // }
 
 
 
-        playTone = (row) => {
-            console.log(row)
-            if(row === 0){
-                  const player = new Tone.Player("/hh02.wav").toMaster()
-                  player.autostart = true
-            }   
-            if(row === 1){
-                  const player = new Tone.Player("/oh02.wav").toMaster()
-                  player.autostart = true
-            }   
-            if(row === 2){
-                  const player = new Tone.Player("/sd11.wav").toMaster()
-                  player.autostart = true
-            }   
-            if(row === 3){
-                  const player = new Tone.Player("/bd05.wav").toMaster()
-                  player.autostart = true
-            }   
-        
-            // const player = new Tone.Players({
-            //         BD: "/bd05.wav"
-            //         // CP: "/clap.wav",
-            //         // OH: "/hh_open.wav",
-            //         // CH: "/hh_closed.wav"
-            //     })
-            //  const lineMap = ["BD"]
-            // //  debugger
-            //  player.get(lineMap[0]).start()
-          
+    playTone = (row) => {
+            console.log('audio', context)
+        //  console.log(Tone.context.state)
+            const lineMap = ["BD", "CP", "CH", "OH"]
+            if (Tone.context.state !== 'running' && Tone.context.state === 'running' ) {
+                // const player = new Tone.Player("/bd05.wav").toMaster()
+            Tone.context.resume();
         }
+        context.resume().then(()=> {
+             if (row === 3) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[3]).start()
+
+                 })
+             }
+             if (row === 2) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[2]).start()
+
+                 })
+             }
+             if (row === 1) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[1]).start()
+
+                 })
+             }
+             if (row === 0) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[0]).start()
+
+                 })
+    
+           
+            }})
+        // console.log(row)
+        // if(row === 0){
+            //       const player = new Tone.Player("/hh02.wav").toMaster()
+                            
+        //       player.autostart = true
+        // }   
+        // if(row === 1){
+        //       const player = new Tone.Player("/oh02.wav").toMaster()
+        //       player.autostart = true
+        // }   
+        // if(row === 2){
+        //       const player = new Tone.Player("/sd11.wav").toMaster()
+        //       player.autostart = true
+        // }   
+            
+        // const player = new Tone.Players({
+        //         BD: "/bd05.wav"
+        //         // CP: "/clap.wav",
+        //         // OH: "/hh_open.wav",
+        //         // CH: "/hh_closed.wav"
+        //     })
+        //  const lineMap = ["BD"]
+        // //  debugger
+        //  player.get(lineMap[0]).start()
+        
+    }
 
 
 
 
 
     renderStep = () => {
-        // console.log(this.state)
+        console.log('drums', this.props)
         return this.props.row.map((step, colIndex) => {
             // console.log(step)
             return (

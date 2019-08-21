@@ -2,6 +2,9 @@ import React from 'react'
 import Step from './Step'
 import Tone from 'tone'
 
+var context = new AudioContext();
+
+
 
 
 class Row extends React.Component{
@@ -20,9 +23,21 @@ class Row extends React.Component{
     }
 
 
+    handleContext = (osc, note) => {
+         if (Tone.context.state !== 'running') {
+             Tone.context.resume().then(()=>{
+                 this.playTone(osc, note)
+
+             });
+    }
+    }
 
 
-        playTone = (osc, note) => {
+
+
+    playTone = (osc, note) => {
+        context.resume().then(()=>{
+
             const synth = new Tone.Synth({
                 "oscillator": {
                     "type": osc,
@@ -35,13 +50,15 @@ class Row extends React.Component{
                     "release": 0.9,
                 },
                 "detune": {
-
+    
                 }
             }).toMaster()
             Tone.start()
             synth.triggerAttackRelease(note, "16n");
             console.log('waddup')
-        }
+
+        })    
+    }
 
 
 

@@ -1,23 +1,23 @@
 
 import './index.css';
 import './App.css'
-import { Provider } from 'react-redux';
 import React from "react";
 import ReactDOM from "react-dom";
 import App from './App';
-import { createStore } from 'redux'
-import reducer from './reducer'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import Player from './components/Player'
+import MainContainer from './containers/MainContainer'
 
 
 
 // store.dispatch({type: })
 
-const store = createStore(reducer)
+
 
 
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<Provider store={store}>
-< App />
-</Provider>
+ReactDOM.render(<Router><Route path='/' render={()=> <App /> }/>
+</Router>
 , rootElement);
