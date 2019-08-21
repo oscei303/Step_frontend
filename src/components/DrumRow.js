@@ -30,12 +30,30 @@ class Row extends React.Component{
     playTone = (row) => {
             console.log('audio', context)
         //  console.log(Tone.context.state)
-            const lineMap = ["BD", "CP", "CH", "OH"]
+            const lineMap = ["BD", "CP", "CH", "OH", "T1", "T2", "T3"]
             if (Tone.context.state !== 'running' && Tone.context.state === 'running' ) {
                 // const player = new Tone.Player("/bd05.wav").toMaster()
             Tone.context.resume();
         }
         context.resume().then(()=> {
+             if (row === 6) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[6]).start()
+
+                 })
+             }
+             if (row === 5) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[5]).start()
+
+                 })
+             }
+             if (row === 4) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[4]).start()
+
+                 })
+             }
              if (row === 3) {
                  context.resume().then(() => {
                      this.props.player.get(lineMap[3]).start()

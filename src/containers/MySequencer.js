@@ -48,15 +48,15 @@ class MySequencer extends React.Component {
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 ],
             activateStart: false,
             activeColumn: 0,
             playing: true,
-            interval: 117,
+            interval: 150,
             loggedIn: false,
             userPatterns: [],
             userDrums: []
@@ -177,10 +177,11 @@ class MySequencer extends React.Component {
 
     componentDidMount(){
         this.fetchPatterns()
+        debugger
     }
 
     fetchPatterns = () => {
-        fetch(`http://localhost:3000/users/40`)
+        fetch(`http://localhost:3000/users/${this.props.id}`)
         .then(r=>r.json())
         .then(patterns => {
             this.setState({
@@ -190,10 +191,7 @@ class MySequencer extends React.Component {
         })
     }
 
-    componentDidUpdate(){
 
-    }
-    
     displayBPM = (state) => {
         return state + 15
     }
@@ -215,9 +213,9 @@ class MySequencer extends React.Component {
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 ]
         })
@@ -228,7 +226,7 @@ class MySequencer extends React.Component {
 
 
     render(){
-        // console.log('in seq', this.props)
+        //    console.log('seq', this.props.user)
         return (       <div>
                 <Fragment>
                     <div id='dial'>

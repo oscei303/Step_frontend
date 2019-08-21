@@ -1,8 +1,8 @@
 body {
   background: #F5FFD1;
-  background-image: url('http://s3.amazonaws.com/factmag-images/wp-content/uploads/2017/09/modularcable-9.20.2017.jpg');
-  -webkit-background-size: cover;
-  background-size: cover;
+  background-image: url('/1.jpg');
+  /* -webkit-background-size: cover;
+  background-size: cover; */
 }
 
 @keyframes moveRight {

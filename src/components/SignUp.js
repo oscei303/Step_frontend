@@ -6,9 +6,9 @@ const Button = styled.button `
   padding: 0.75em 1em;
   outline: none;
   background-color: #C7ED0B;
-  border: none;
+  border: 3px solid black;
   border-radius: 5px;
-  color: white;
+  color: black;
   font-size: 1em;
   margin: 0.5em
   border: 
@@ -44,7 +44,7 @@ class SignUp extends React.Component{
          
             <div>
                 <form id='user-form'
-                    onSubmit={(event) => this.props.handleSubmit(event,this.props.routerProps)}>
+                    onSubmit={(event) => this.props.handleCreate(event,this.props.routerProps)}>
                         
                     <div>
                         <input onChange={this.props.handleChange}

@@ -10,7 +10,7 @@ class MainContainer extends React.Component {
         loggedIn: false,
         username: '',
         password: '',
-        currentUser: null,
+        currentUser: '',
         id: ''
     }
 
@@ -20,47 +20,71 @@ class MainContainer extends React.Component {
         [event.target.name]: event.target.value})
     }
 
-    handleSubmit = (event, routerProps) => {
-        console.log(routerProps)
+    handleCreate = (event, routerProps) => {
+        // console.log(routerProps)
         event.preventDefault()
             console.log('submit', this.state.username, 'password', this.state.password)
-            this.setState({
-                loggedIn: true,
-                username: this.state.username,
-                password: this.state.password
+            fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: this.state.username,
+                    password_digest: this.state.password
+                })
+            }).then(r => r.json()).then(newUser => {
+                routerProps.history.push('/main')
+                console.log(routerProps)
 
-            }, () => this.createUser(routerProps, event))
+                this.setState({
+                    loggedIn: true,
+                    username: this.state.username,
+                    password: this.state.password,
+                    currentUser: newUser,
+                    id: newUser.id
+                }, () => console.log('incrreate', this.state.currentUser))
+                //    debugger
+            })
+      
+           
+
            
 
     }
 
-    createUser = (routerProps, event) => {
+    // createUser = (routerProps, event) => {
         
 
-        fetch('http://localhost:3000/users',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                username: this.state.username,
-                password_digest: this.state.password
-            })
-        }).then(r => r.json()).then(newUser => {
-            routerProps.history.push('/main')
-            console.log(routerProps)
+    //     fetch('http://localhost:3000/users',{
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             username: this.state.username,
+    //             password_digest: this.state.password
+    //         })
+    //     }).then(r => r.json()).then(newUser => {
+    //         routerProps.history.push('/main')
+    //         console.log(routerProps)
             
-               this.setState({
-                   currentUser: newUser,
-                   id: newUser.id
-               }, () => console.log('incrreate', this.state.currentUser))
-        })
-    }
+    //            this.setState({
+    //                 loggedIn: true,
+    //                 username: this.state.username,
+    //                 password: this.state.password,
+    //                 currentUser: newUser,
+    //                 id: newUser.id
+    //            }, () => console.log('incrreate', this.state.currentUser))
+    //         //    debugger
+    //     })
+    // }
 
 
 render(){
-   console.log('main', this.props)
+   console.log('main', this.state)
     return (
         <Fragment>
             <Switch>
@@ -76,7 +100,7 @@ render(){
             /> 
             : <Route path='/' render={(routerProps) => <LogInContainer 
                 routerProps={routerProps}
-                handleSubmit={this.handleSubmit}
+                handleCreate={this.handleCreate}
                 handleChange={this.handleChange}
                 username={this.state.user}
                 password={this.state.password} 

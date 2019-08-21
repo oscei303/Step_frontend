@@ -6,10 +6,10 @@ import Tone from 'tone'
 
 
 const Button = styled.button `
-  padding: 0.75em 1em;
+  padding: 0.50em 1em;
   outline: none;
-  background-color: #B6DB00;
-  border: 3px solid #fffff;
+  background-color: #C7ED0B;
+  border: 3px solid black;
   border-radius: 5px;
   color: white;
   font-size: 1em;
@@ -23,7 +23,7 @@ const Button = styled.button `
 `
 
 const ProgButton = styled.button `
-padding: 0.50em 1em;
+padding: 0.25em 1em;
 outline: none;
 background-color: #93B7BE;
 border: none;
@@ -38,10 +38,10 @@ margin: 0.5em
     }
 `;
 const TrigButton = styled.button `
-padding: 0.75em 1em;
+padding: 0.50em 1em;
 outline: none;
-background-color: #048A81;
-border: none;
+background-color: #27ae60;
+border: 3px solid black;
 border-radius: 5px;
 color: white;
 font-size: 1em;
@@ -53,7 +53,7 @@ margin: 0.5em
     }
 `;
 const ComboButton = styled.button `
-padding: 0.40em 1em;
+padding: 0.10em 1em;
 outline: none;
 background-color: #27ae60;
 border: none;

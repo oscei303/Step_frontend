@@ -9,7 +9,7 @@ render(){
     return(
         <SignUp
             routerProps={this.props.routerProps}
-            handleSubmit={this.props.handleSubmit}
+            handleCreate={this.props.handleCreate}
             handleChange={this.props.handleChange}
             username={this.props.user}
             password={this.props.password}
