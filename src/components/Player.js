@@ -6,7 +6,7 @@ const Player = ({ children }) => {
   useEffect(() => {
     const player = new Tone.Players(
       {
-        BD: "/MBASEkick02.wav",
+        BD: "/909_2XMoogDrive_Kick1_SP.wav",
         CP: "/909MoogDrive_Clap_SP.wav",
         OH: "/909MoogDrive_OH2_SP.wav",
         CH: "/hh02.wav",

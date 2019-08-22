@@ -1,8 +1,8 @@
 body {
   background: #F5FFD1;
   background-image: url('/1.jpg');
-  -webkit-background-size: cover;
-  background-size: cover;
+  /* -webkit-background-size: cover;
+  background-size: cover; */
   align-content: center
 }
 
