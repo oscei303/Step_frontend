@@ -3,7 +3,7 @@ import DrumStep from './DrumStep'
 import Tone from 'tone'
 
 
-const context = new AudioContext(); 
+const context = new AudioContext();
  
 
 class Row extends React.Component{
@@ -30,12 +30,18 @@ class Row extends React.Component{
     playTone = (row) => {
             console.log('audio', context)
         //  console.log(Tone.context.state)
-            const lineMap = ["BD", "CP", "CH", "OH", "T1", "T2", "T3"]
+            const lineMap = ["BD", "CP", "CH", "OH", "T1", "T2", "T3", "BR"]
             if (Tone.context.state !== 'running' && Tone.context.state === 'running' ) {
                 // const player = new Tone.Player("/bd05.wav").toMaster()
             Tone.context.resume();
         }
         context.resume().then(()=> {
+             if (row === 7) {
+                 context.resume().then(() => {
+                     this.props.player.get(lineMap[7]).start()
+
+                 })
+             }
              if (row === 6) {
                  context.resume().then(() => {
                      this.props.player.get(lineMap[6]).start()
@@ -80,31 +86,7 @@ class Row extends React.Component{
     
            
             }})
-        // console.log(row)
-        // if(row === 0){
-            //       const player = new Tone.Player("/hh02.wav").toMaster()
-                            
-        //       player.autostart = true
-        // }   
-        // if(row === 1){
-        //       const player = new Tone.Player("/oh02.wav").toMaster()
-        //       player.autostart = true
-        // }   
-        // if(row === 2){
-        //       const player = new Tone.Player("/sd11.wav").toMaster()
-        //       player.autostart = true
-        // }   
-            
-        // const player = new Tone.Players({
-        //         BD: "/bd05.wav"
-        //         // CP: "/clap.wav",
-        //         // OH: "/hh_open.wav",
-        //         // CH: "/hh_closed.wav"
-        //     })
-        //  const lineMap = ["BD"]
-        // //  debugger
-        //  player.get(lineMap[0]).start()
-        
+
     }
 
 
@@ -151,32 +133,9 @@ class Row extends React.Component{
                             <select onChange={this.handleChange} name='osc'>
 
                                 <option>..... ...</option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
                             </select>    
                             <select onChange={this.handleChange} name='note'>
                                 <option>.... ...  </option>
-                                <option>D2</option>
-                                <option>E2</option>
-                                <option>F2</option>
-                                <option>G2</option>
-                                <option>A2</option>
-                                <option>B2</option>
-                                <option>C3</option>
-                                <option>D3</option>
-                                <option>E3</option>
-                                <option>F3</option>
-                                <option>G3</option>
-                                <option>A3</option>
-                                <option>B3</option>
-                                <option>C4</option>
-                                <option>D4</option>
-                                <option>E4</option>
-                                <option>F4</option>
-                                <option>G4</option>
-                                <option>A4</option>
-                                <option>B4</option>
                             </select>    
                         </div>  
             

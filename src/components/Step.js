@@ -69,7 +69,7 @@ margin: 0.5em
 `;
 
 
-
+var context = new AudioContext();
 
 
 class Step extends React.Component{
@@ -82,7 +82,11 @@ class Step extends React.Component{
            if (Tone.context.state !== 'running') {
                Tone.context.resume();
            }
-        this.props.toggleStep(rowIndex, colIndex, this.props.activeStep)
+
+        context.resume().then(()=>{
+            this.props.toggleStep(rowIndex, colIndex, this.props.activeStep)
+
+        })
 
 
     }
