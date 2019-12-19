@@ -16,7 +16,7 @@ const Button = styled.button `
   margin: 0.5em
 
   &:hover {
-    background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
     cursor: pointer;
   }
   
@@ -33,14 +33,14 @@ font-size: 1em;
 margin: 0.5em
 
     &:hover {
-        background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
         cursor: pointer;
     }
 `;
 const TrigButton = styled.button `
 padding: 0.50em 1em;
 outline: none;
-background-color: #27ae60;
+background-color: #ECA72C;
 border: 3px solid black;
 border-radius: 5px;
 color: white;
@@ -48,14 +48,15 @@ font-size: 1em;
 margin: 0.5em
 
     &:hover {
-        background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
         cursor: pointer;
     }
 `;
+
 const ComboButton = styled.button `
 padding: 0.10em 1em;
 outline: none;
-background-color: #27ae60;
+background-color: #ECA72C;
 border: none;
 border-radius: 5px;
 color: black;
@@ -63,30 +64,27 @@ font-size: 1em;
 margin: 0.5em
 
     &:hover {
-        background: ${darken(0.2, "#27ae60")};
+        background: ${darken(0.2, "#ECA72C")};
         cursor: pointer;
     }
 `;
 
 
-var context = new AudioContext();
+
 
 
 class Step extends React.Component{
 
 
     triggerStep = (rowIndex, colIndex) => {
-        // this.setState({
-        //     stepON: !this.state.stepON
-        // }, () => console.log(this.state.stepON))
            if (Tone.context.state !== 'running') {
                Tone.context.resume();
            }
-
-        context.resume().then(()=>{
-            this.props.toggleStep(rowIndex, colIndex, this.props.activeStep)
-
-        })
+        // console.log(rowIndex)
+        // this.setState({
+        //     stepON: !this.state.stepON
+        // }, () => console.log(this.state.stepON))
+        this.props.toggleStep(rowIndex, colIndex, this.props.activeStep)
 
 
     }

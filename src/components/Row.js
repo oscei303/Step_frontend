@@ -2,13 +2,20 @@ import React from 'react'
 import Step from './Step'
 import Tone from 'tone'
 
+var context = new AudioContext();
+
+
 
 
 class Row extends React.Component{
 
        state={
-        osc: 'pwm',
-        note: 'C2'
+        osc: "sine",
+        note: 'C2',
+        attack: 0.6,
+        decay: 0.1,
+        sustain: 0.2,
+        release: 0.9
     }
 
 
@@ -20,42 +27,113 @@ class Row extends React.Component{
     }
 
 
+    handleContext = (osc, note) => {
+         if (Tone.context.state !== 'running') {
+             Tone.context.resume().then(()=>{
+                 this.playTone(osc, note)
+
+             });
+    }
+    }
 
 
-        playTone = (osc, note) => {
+
+
+    playTone = (osc, note, attack, decay, sustain, release) => {
+        console.log(this.state.attack, this.state.decay, this.state.release, this.state.sustain, 'inside synth')
+        context.resume().then(()=>{
+            const filter = new Tone.Filter(200, "highpass");
+
             const synth = new Tone.Synth({
                 "oscillator": {
                     "type": osc,
-                    "modulationFrequency": 5
+                    "modulationFrequency": 10
                 },
                 "envelope": {
-                    "attack": 0.6,
-                    "decay": 0.1,
-                    "sustain": 0.2,
-                    "release": 0.9,
+                    "attack": attack,
+                    "decay": decay,
+                    "sustain": sustain,
+                    "release": release,
                 },
                 "detune": {
-
+                    "cents": 5
+    
                 }
             }).toMaster()
             Tone.start()
             synth.triggerAttackRelease(note, "16n");
-            console.log('waddup')
-        }
+           
+        })    
+    }
+
+    attackUp = () => {
+        context.resume().then(
+         this.setState({
+             attack: this.state.attack + 1
+         })
+        )
+    }
+    attackDown = () => {
+        context.resume().then(
+         this.setState({
+             attack: this.state.attack - 1
+         })
+        )
+    }
+    decayUp = () => {
+        context.resume().then(
+         this.setState({
+             decay: this.state.decay + 1
+         })
+        )
+    }
+    decayDown = () => {
+        context.resume().then(
+         this.setState({
+             decay: this.state.decay - 1
+         })
+        )
+    }
+    sustainUp = () => {
+        context.resume().then(
+         this.setState({
+             sustain: this.state.sustain + 1
+         })
+        )
+    }
+    sustainDown = () => {
+        context.resume().then(
+         this.setState({
+             sustain: this.state.sustain - 1
+         })
+        )
+    }
+    releaseUp = () => {
+        context.resume().then(
+         this.setState({
+             release: this.state.release + 1
+         })
+        )
+    }
+    releaseDown = () => {
+        context.resume().then(
+         this.setState({
+             release: this.state.release - 1
+         })
+        )
+    }
 
 
-
-
-
+   
     renderStep = () => {
-        console.log(this.state)
+        // console.log(this.state)
         return this.props.row.map((step, colIndex) => {
             // console.log(step)
             return (
                 <div className='row'>
              
                     <Step
-                    playTone={() => this.playTone(this.state.osc, this.state.note)}
+                    playTone={() => this.playTone(this.state.osc, this.state.note, this.state.attack, this.state.decay, this.state.sustain, this.state.release)}
                     stepON={step}
                     toggleStep={this.props.toggleStep} 
                     activeStep={this.props.activeColumn === colIndex}
@@ -63,7 +141,7 @@ class Row extends React.Component{
                     colIndex={colIndex}
                     key={this.props.rowIndex+'-'+ colIndex} 
                     />
-
+                 
 
                 </div>
 
@@ -75,9 +153,7 @@ class Row extends React.Component{
         })
     }    
 
-    
 
-    
 
 
     render(){
@@ -86,6 +162,7 @@ class Row extends React.Component{
                   <div className='row'>
                             <select onChange={this.handleChange} name='osc'>
 
+                                <option>sine</option>
                                 <option>pwm</option>
                                 <option>square</option>
                                 <option>triangle</option>
@@ -114,8 +191,23 @@ class Row extends React.Component{
                                 <option>B4</option>
                             </select>    
                         </div>  
+                   
                 {this.renderStep()}
 
+                        <div className='row'>
+                         <h4 className='row1'>A</h4>
+                         <h4 className='row2' onClick={this.attackUp}>+</h4>
+                         <h4 className='row2' onClick={this.attackDown}>-</h4>
+                         <h4 className='row1'>D</h4>
+                         <h4 className='row2' onClick={this.decayUp}>+</h4>
+                         <h4 className='row2' onclick={this.decayDown}>-</h4>
+                         <h4 className='row1'>S</h4>
+                         <h4 className='row2' onClick={this.sustainUp}>+</h4>
+                         <h4 className='row2' onClick={this.sustainDown}>-</h4>
+                         <h4 className='row1'>R</h4>
+                         <h4 className='row2' onClick={this.releaseUp}>+</h4>
+                         <h4 className='row2' OnClick={this.releaseDown}>-</h4>
+                        </div>
             </div>
         )
     }

@@ -1,12 +1,10 @@
 import React from 'react'
-import Row from '../components/Row'
+import DrumRow from '../components/DrumRow'
 
 
 
 
-        // const { sequencer } = this.props;
-
-class Channel extends React.Component {
+class DrumsChannel extends React.Component {
 
 
  
@@ -17,7 +15,9 @@ class Channel extends React.Component {
                     <div className='channel'>
                         
                         <div className='row'>
-                         <Row
+                         <DrumRow
+                            
+                            player={this.props.player}
                             key={rowIndex} 
                             row={row} 
                             rowIndex={rowIndex}
@@ -38,6 +38,7 @@ render(){
 
     return (
         <div>
+            <h4 id='title2'>Bootleg 909 </h4>
             {this.renderSteps()}
         </div>
     )
@@ -45,4 +46,4 @@ render(){
 
 }
 
-export default Channel
+export default DrumsChannel
